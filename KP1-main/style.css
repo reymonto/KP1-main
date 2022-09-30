@@ -1,0 +1,60 @@
+body {
+
+    background-image: url(img/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+
+.pig {
+    position: absolute;
+    width: 120px;
+    height: 90px;
+    background-image: url(./img/pig.png);
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s;
+    background-repeat: no-repeat;
+}
+
+.pig img {
+    width: 100%;
+    height: 100%;
+}
+
+.cloud {
+    position: absolute;
+    width: 280px;
+    height: 150px;
+    background-image: url(./img/cloud1.png);
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s;
+}
+
+
+
+#lifes span {
+    display: block;
+    margin: 10px;
+    float: top;
+    width: 40px;
+    height: 40px;
+    background: url(img/cloud1.png);
+    background-size: cover;
+}
+#startbtn {
+    
+    font-family: arial black;
+    background: #red;
+    border-radius: 50px;
+    border: 4px solid #336184;
+    cursor: pointer;
+    margin: 20px;
+    
+}
