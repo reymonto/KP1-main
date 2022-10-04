@@ -9,18 +9,19 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body width="100%" height="auto">
-
-  <div id="app"  style="display: none;">
-
-    <div class="start"></div>
+<body>
+  <div class="start" style="display: block;">
+    <div id="select-pig" class="selected"></div>
+    <div id="select-bee"></div>
+    <button>Start</button>
+  </div>
+  <div id="app">
+    <div id="player"></div>
     <div id="game"></div>
     <div id="lifes"></div>
     <div class="end"></div>
   </div>
-  <div id="start" style="display: block;">     
-      <button id="startbtn">Start</button>
-    </div>
+  <div id="end"></div>
   <script src="./js/app_03_function.js"></script>
 </body>
 

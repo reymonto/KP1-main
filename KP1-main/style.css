@@ -11,26 +11,127 @@ body {
 
 }
 
-.pig {
+#app {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.start {
     position: absolute;
-    width: 120px;
-    height: 90px;
-    background-image: url(./img/pig.png);
+    width: 500px;
+    height: 500px;
+    margin-left: 30%;
+    background-image: url(./img/cloud1.png);
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s;
+
+}
+
+#select-pig {
+    background: url(img/pig1.png);
+    position: absolute;
+    width: 150px;
+    height: 110px;
+    top: 30%;
+    left: 15%;
+    z-index: 5;
     background-size: cover;
     background-position: center;
     transition: all 0.3s;
     background-repeat: no-repeat;
 }
 
-.pig img {
-    width: 100%;
-    height: 100%;
+#select-bee {
+    background: url(img/bee2.png);
+    position: absolute;
+    width: 110px;
+    height: 150px;
+    top: 23%;
+    left: 65%;
+    z-index: 5;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s;
+    background-repeat: no-repeat;
 }
+
+.selected {
+    border: 2px solid #2b537172;
+    border-radius: 15px;
+}
+
+.start button {
+
+    padding: auto;
+    position: absolute;
+    top: 80%;
+    left: 30%;
+    width: 250px;
+    height: 90px;
+    font-family: sans-serif;
+    font-weight: 900;
+    background: rgba(5, 94, 177, 0.5);
+    color: rgb(20, 55, 233);
+    font-size: 40px;
+    /* background: red; */
+    border-radius: 50px;
+    border: 10px solid #2b537172;
+    cursor: pointer;
+    margin-left: 0px;
+    z-index: 3;
+
+}
+
+
+#player {
+    position: absolute;
+
+
+    background-size: cover;
+    background-position: center;
+    transition: all 0.5s;
+    background-repeat: no-repeat;
+    z-index: 999;
+}
+
+.pig {
+    background-image: url(./img/pig2.png);
+    width: 120px;
+    height: 90px;
+}
+
+.bee {
+    background-image: url(./img/bee2.png);
+    width: 90px;
+    height: 130px;
+}
+
+/* #player .bee {
+    position: absolute;
+    width: 120px;
+    height: 90px;
+    background-image: url(./img/m_bee.png);
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s;
+    background-repeat: no-repeat;
+    z-index: 999;
+} */
+
+
 
 .cloud {
     position: absolute;
     width: 280px;
-    height: 150px;
+    height: 220px;
     background-image: url(./img/cloud1.png);
     background-size: cover;
     background-position: center;
@@ -39,22 +140,22 @@ body {
 
 
 
-#lifes span {
+#lifes .pig2 {
     display: block;
     margin: 10px;
     float: top;
     width: 40px;
-    height: 40px;
-    background: url(img/cloud1.png);
+    height: 30px;
+    background: url(img/pig1.png);
     background-size: cover;
 }
-#startbtn {
-    
-    font-family: arial black;
-    background: #red;
-    border-radius: 50px;
-    border: 4px solid #336184;
-    cursor: pointer;
-    margin: 20px;
-    
+
+#lifes .bee2 {
+    display: block;
+    margin: 10px;
+    float: top;
+    width: 40px;
+    height: 55px;
+    background: url(img/bee1.png);
+    background-size: cover;
 }
