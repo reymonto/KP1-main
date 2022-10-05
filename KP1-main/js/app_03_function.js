@@ -1,6 +1,6 @@
 gamerSkin = "select-pig"; //вибір аватара для гри
 skin = "pig"; //вибір поворота вліво право
-countLifes = 1; //кількість життя
+countLifes = 3; //кількість життя
 player = document.querySelector(".selected"); //гравець
 gamePage = document.querySelector("#app"); //іграва сторінка
 cloud = document.querySelector(".cloud"); //хмара
@@ -44,6 +44,7 @@ function startGame() {
   createPig();
   pig = document.querySelector("#player");
   createCloud2();
+  moveCloud2()
   cloud2 = document.querySelector(".cloud");
   createCloud();
 }
@@ -76,7 +77,7 @@ function jumpWhenOnCloud() {
       pig.offsetTop > cloud[i].offsetTop &&
       pig.offsetTop + pig.clientHeight / 2 <
         cloud[i].offsetTop + cloud[i].clientHeight &&
-      pig.offsetLeft + 100 > cloud[i].offsetLeft &&
+      pig.offsetLeft  > cloud[i].offsetLeft &&
       pig.offsetLeft + pig.clientWidth <
         cloud[i].offsetLeft + cloud[i].clientWidth
     ) {
@@ -90,21 +91,22 @@ function jumpWhenOnCloud() {
 // потолок
 function ceiling() {
   //console.log(pig.style.top);
-  if (pig.style.top < gamePage.offsetTop + "px") {
-    pig.style.top = 0;
+  if (pig.style.top < gamePage.clientHeight ) {
+    console.dir("123")
   }
 }
 
 //Стрибок свині
-function jump() {
+function jump() { 
   clearInterval(downTimerId);
   upTimerId = setInterval(function () {
-    distance += -40;
+    distance += -50;
     pig.style.top = distance + "px";
-    if (distance < 30) {
+    if (distance < 10) {
       fallPig();
     }
-  }, 30);
+    
+  }, 10);
 }
 
 // падіння свині
@@ -113,13 +115,13 @@ function fallPig() {
   clearInterval(upTimerId);
   let cloud = document.querySelector(".cloud");
   downTimerId = setInterval(function () {
-    distance += 5;
+    distance += 20;
     pig.style.top = distance + "px";
     jumpWhenOnCloud();
-    if(pig.offsetTop > gamePage.clientHeight){
+    if(pig.offsetTop > gamePage.clientHeight ){
       endGame()
-    }
-  }, 30);
+    }   
+  }, 50);
 }
 
 // рух вліво
@@ -187,9 +189,9 @@ function counterCloud() {
     moveCloud2(cloud2);
   }
 }
-function moveCloud2(cloud2) {
+function moveCloud2() {
   let timerID = setInterval(function () {
-    cloud2.style.top = cloud2.offsetTop + 10 + "px";
+    cloud2.style.top = cloud2.offsetTop + 5 + "px";
     if (cloud2.offsetTop > gamePage.clientHeight) {
       cloud2.remove();
       clearInterval(timerID);
@@ -200,7 +202,7 @@ function moveCloud2(cloud2) {
 //Рух хмаринки
 function moveCloud(cloud) {
   let timerCloud = setInterval(function () {
-    cloud.style.top = cloud.offsetTop + 10 + "px";
+    cloud.style.top = cloud.offsetTop + 20 + "px";
     if (cloud.offsetTop > gamePage.clientHeight) {
       cloud.remove();
       clearInterval(timerCloud);
