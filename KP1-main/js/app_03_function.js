@@ -6,14 +6,19 @@ gamePage = document.querySelector("#app"); //іграва сторінка
 cloud = document.querySelector(".cloud"); //хмара
 start = document.querySelector(".start"); //стартова сторінка
 startButton = document.querySelector(".start button"); //стартова кнопка
-let disatnce = 150
-let uptimerId
-let downtimerId
+scoreText = document.querySelector("#score span"); //рахунок
+endPage = document.querySelector("#reset")
+resetBtn = document.querySelector("#reset-btn")
+let upTimerId;
+let downTimerId;
+counter = 0;
+distance = 15;
+
 //старт гри
 
 startButton.onclick = function () {
   startGame();
-  jump()
+  jump();
 };
 
 //Таймер який запуска хмаринки кожні 4 секунди
@@ -41,17 +46,13 @@ function startGame() {
   createCloud2();
   cloud2 = document.querySelector(".cloud");
   createCloud();
-  
 }
 
 // Функція клавіатури
 
 document.onkeydown = function (event) {
-  //console.dir(event);
   if (event.keyCode == 65) {
     moveLeft();
-    /* console.log(pig.offsetTop);
-    console.log(cloud2.offsetTop + 50); */
   }
   if (event.keyCode == 68) {
     moveRight();
@@ -59,65 +60,88 @@ document.onkeydown = function (event) {
 
   if (event.keyCode == 32) {
     jumpWhenOnCloud();
-    /* console.log("jumped");
-    jump(); */
   }
 };
-
+//рахунок
+score = 0;
+function calculation() {
+  score = score + 1;
+  scoreText.innerText = score;
+}
 //стрибок свині тільки якщо вона на хмаринці
 function jumpWhenOnCloud() {
   let cloud = document.querySelectorAll(".cloud");
   for (i = 0; i < cloud.length; i++) {
     if (
       pig.offsetTop > cloud[i].offsetTop &&
-      pig.offsetTop + pig.clientHeight < cloud[i].offsetTop + cloud[i].clientHeight &&
-      pig.offsetLeft > cloud[i].offsetLeft &&
-      pig.offsetLeft + pig.clientWidth < cloud[i].offsetLeft + cloud[i].clientWidth
+      pig.offsetTop + pig.clientHeight / 2 <
+        cloud[i].offsetTop + cloud[i].clientHeight &&
+      pig.offsetLeft + 100 > cloud[i].offsetLeft &&
+      pig.offsetLeft + pig.clientWidth <
+        cloud[i].offsetLeft + cloud[i].clientWidth
     ) {
-      jump();     
-    } 
+      jump();
+      calculation();
+      counter = counter + 1;
+      counterCloud();
+    }
+  }
+}
+// потолок
+function ceiling() {
+  //console.log(pig.style.top);
+  if (pig.style.top < gamePage.offsetTop + "px") {
+    pig.style.top = 0;
   }
 }
 
 //Стрибок свині
-
 function jump() {
-  clearInterval(downtimerId)
-  uptimerId = setInterval(function(){
-      disatnce += -40
-      pig.style.top = disatnce +"px"   
-      if (disatnce < 30)  {
-          fallPig()  
-      }
-  }, 30)
+  clearInterval(downTimerId);
+  upTimerId = setInterval(function () {
+    distance += -40;
+    pig.style.top = distance + "px";
+    if (distance < 30) {
+      fallPig();
+    }
+  }, 30);
+}
+
+// падіння свині
+
+function fallPig() {
+  clearInterval(upTimerId);
+  let cloud = document.querySelector(".cloud");
+  downTimerId = setInterval(function () {
+    distance += 5;
+    pig.style.top = distance + "px";
+    jumpWhenOnCloud();
+    if(pig.offsetTop > gamePage.clientHeight){
+      endGame()
+    }
+  }, 30);
 }
 
 // рух вліво
 
 function moveLeft() {
-  let clouds = document.querySelectorAll(".cloud");
-  pig.style.left = pig.offsetLeft - 30 + "px";
+  pig.style.left = pig.offsetLeft - 100 + "px";
+  //console.log(gamePage.clientWidth, pig.offsetLeft, pig.style.left);
+  if (pig.style.left < 200 + "px") {
+    pig.style.left = 200 + "px";
+  }
   pig.style.backgroundImage = "url(img/" + skin + "2.png)";
 }
 
 //рух вправо
 
 function moveRight() {
-  let clouds = document.querySelectorAll(".cloud");
-  pig.style.left = pig.offsetLeft + 30 + "px";
+  pig.style.left = pig.offsetLeft + 100 + "px";
+  //console.log(gamePage.clientWidth, pig.offsetLeft, pig.style.left);
+  if (pig.offsetLeft > gamePage.clientWidth - 300) {
+    pig.style.left = gamePage.clientWidth - 300 + "px";
+  }
   pig.style.backgroundImage = "url(img/" + skin + "1.png)";
-}
-
-//перевірка падіння свині чи рух
-
-function fallPig() {
-  clearInterval(uptimerId)
-  let cloud = document.querySelector(".cloud");
-  downtimerId = setInterval(function() {
-      disatnce += 5;
-      pig.style.top = disatnce + "px";   
-      jumpWhenOnCloud() 
-  }, 30)
 }
 
 //поява персонажа на ігровому полі
@@ -158,7 +182,11 @@ function createCloud() {
 }
 
 //рух першої хмарринки
-
+function counterCloud() {
+  if (counter == 3) {
+    moveCloud2(cloud2);
+  }
+}
 function moveCloud2(cloud2) {
   let timerID = setInterval(function () {
     cloud2.style.top = cloud2.offsetTop + 10 + "px";
@@ -180,13 +208,6 @@ function moveCloud(cloud) {
   }, 200);
 }
 
-//Втрата життя
-function die() {
-  countLifes = countLifes - 1;
-  if (countLifes <= 0) {
-    endGame();
-  }
-}
 
 //Кількість життя
 function createLifes() {
@@ -214,9 +235,14 @@ function random(min, max) {
 
 //Перезагрузка сторінки
 function restart() {
-  location.reload();
+  location.reload()
 }
 
+function endGame(){
+  endPage.style.display = "block"
+  gamePage.style.display = "none"
+  resetBtn.onclick = restart
+}
 //вибір гравця свиня
 selectSkin1 = document.querySelector("#select-pig");
 selectSkin1.onclick = function () {
